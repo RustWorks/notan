@@ -98,7 +98,7 @@ impl BackendSystem for WinitBackend {
         S: 'static,
         R: FnMut(&mut App, &mut S) -> Result<FrameState, String> + 'static,
     {
-        let event_loop = EventLoop::new();
+        let event_loop = EventLoop::new().map_err(|e| e.to_string())?;
         let win = WinitWindowBackend::new(window, &event_loop)?;
         let mut dpi_scale = win
             .window()
@@ -169,8 +169,7 @@ impl BackendSystem for WinitBackend {
                                 );
                             }
                             WindowEvent::ScaleFactorChanged {
-                                scale_factor,
-                                new_inner_size: size,
+                                scale_factor, inner_size_writer: size
                             } => {
                                 if let Some(win) = &mut b.window {
                                     win.resize(size.width, size.height);
@@ -250,7 +249,7 @@ impl BackendSystem for WinitBackend {
                             _ => {}
                         }
                     }
-                    WEvent::MainEventsCleared => {
+                    WEvent::AboutToWait => {
                         let needs_redraw = !is_lazy || request_redraw;
                         if needs_redraw {
                             if let Some(win) = &mut b.window {
@@ -294,7 +293,10 @@ impl BackendSystem for WinitBackend {
                 if exit_requested {
                     *control_flow = ControlFlow::Exit;
                 }
-            });
+
+            })?;
+
+            Ok(())
         }))
     }
 
