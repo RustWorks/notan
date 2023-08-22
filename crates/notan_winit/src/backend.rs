@@ -169,7 +169,8 @@ impl BackendSystem for WinitBackend {
                                 );
                             }
                             WindowEvent::ScaleFactorChanged {
-                                scale_factor, inner_size_writer: size
+                                scale_factor,
+                                inner_size_writer: size,
                             } => {
                                 if let Some(win) = &mut b.window {
                                     win.resize(size.width, size.height);
@@ -293,7 +294,6 @@ impl BackendSystem for WinitBackend {
                 if exit_requested {
                     *control_flow = ControlFlow::Exit;
                 }
-
             })?;
 
             Ok(())

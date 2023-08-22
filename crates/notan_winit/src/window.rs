@@ -369,7 +369,7 @@ fn winit_cursor(cursor: CursorIcon) -> Option<WCursorIcon> {
         CursorIcon::Default => WCursorIcon::Default,
         CursorIcon::ContextMenu => WCursorIcon::ContextMenu,
         CursorIcon::Help => WCursorIcon::Help,
-        CursorIcon::PointingHand => WCursorIcon::Hand,
+        CursorIcon::PointingHand => WCursorIcon::Pointer,
         CursorIcon::Progress => WCursorIcon::Progress,
         CursorIcon::Wait => WCursorIcon::Wait,
         CursorIcon::Cell => WCursorIcon::Cell,
